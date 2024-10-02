@@ -35,10 +35,6 @@ const Body = () => {
     setFilteredList(updatedList);
   };
 
-  // if (loading) {
-  //   return <Shimmer />;
-  // }
-
   if (error) {
     return <h3>{error}</h3>; // Show error message if fetch fails
   }

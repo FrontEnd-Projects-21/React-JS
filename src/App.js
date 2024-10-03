@@ -5,6 +5,7 @@ import Body from "./Components/Body.js";
 import About from "./Components/About.js";
 import Contact from "./Components/Contact.js";
 import Error from "./Components/Error.js";
+import ResturentMenu from "./Components/ResturentMenu.js";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 // const styleCard = {
@@ -35,6 +36,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/resturent/:resId",
+        element: <ResturentMenu />,
       },
     ],
     errorElement: <Error />,

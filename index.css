@@ -28,9 +28,6 @@
   border: 1px solid orange;
   cursor: pointer;
 }
-.search-bar {
-  padding: 10px;
-}
 
 .resturent-logo {
   width: 100%;
@@ -41,7 +38,6 @@
   flex-wrap: wrap;
 }
 .filter-btn {
-  margin: 10px;
   cursor: pointer;
 }
 /* .shimmer-container {
@@ -88,4 +84,8 @@
   margin-right: 20px;
   cursor: pointer;
   font-size: 24px;
+}
+.filter {
+  margin: 10px;
+  display: flex;
 }

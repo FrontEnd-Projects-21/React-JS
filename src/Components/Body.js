@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import ResturentCard from "./ResturentCard";
 const Body = () => {
   const [resturentList, setResturentList] = useState([]);
-  const [filteredList, setFilteredList] = useState([]);
+  const [filterResturants, setFilterResturants] = useState([]);
   const [loading, setLoading] = useState(true); // For shimmer effect
-  const [error, setError] = useState(null); // New error state
+  const [searchtext, setSearchtext] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -22,35 +22,48 @@ const Body = () => {
           ?.restaurants;
 
       setResturentList(restaurants || []); // Set an empty array if restaurants is null/undefined
-      setFilteredList(restaurants || []);
+      setFilterResturants(restaurants);
       setLoading(false); // Stop shimmer after data is fetched
     } catch (error) {
-      setError("Failed to load data"); // Set error message
       setLoading(false); // Stop shimmer in case of error
     }
   };
 
   const filterTopRated = () => {
     const updatedList = resturentList.filter((res) => res.info.avgRating > 4);
-    setFilteredList(updatedList);
+    setFilterResturants(updatedList);
   };
-
-  if (error) {
-    return <h3>{error}</h3>; // Show error message if fetch fails
-  }
+  const handleSearch = () => {
+    const filteredList = resturentList.filter(
+      (res) => res?.info?.name?.toLowerCase().includes(searchtext.toLowerCase()) // Make sure to return the result here
+    );
+    setFilterResturants(filteredList);
+  };
 
   return loading ? (
     <Shimmer />
   ) : (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            className="search-bar"
+            placeholder="Enter the Resturent..."
+            value={searchtext}
+            onChange={(e) => {
+              setSearchtext(e.target.value);
+            }}
+          />
+          <button onClick={handleSearch}>Search</button>
+        </div>
         <button className="filter-btn" onClick={filterTopRated}>
           Top Rated Restaurants
         </button>
       </div>
       <div className="resturent-container">
-        {filteredList.length > 0 ? (
-          filteredList.map((resturent) => (
+        {filterResturants.length > 0 ? (
+          filterResturants.map((resturent) => (
             <ResturentCard key={resturent.info.id} resData={resturent} />
           ))
         ) : (

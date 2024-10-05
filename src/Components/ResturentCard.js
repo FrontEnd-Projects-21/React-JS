@@ -7,9 +7,9 @@ const ResturentCard = (props) => {
   // Cloudinary image URL
 
   return (
-    <div className="resturent-card" style={{ backgroundColor: "#feddc1" }}>
+    <div className="resturent-card m-4 p-4 w-[200px] bg-orange-200 rounded-lg hover:bg-orange-400" >
       <img className="resturent-logo" src={LOGO_URL} alt="restaurant-logo" />
-      <h3>{name}</h3>
+      <h3 className="font-bold py-4 text-lg">{name}</h3>
       <h4>{cuisines.join(", ")}</h4>
       <h4>{avgRating} Stars</h4>
       <h4>{costForTwo}</h4>

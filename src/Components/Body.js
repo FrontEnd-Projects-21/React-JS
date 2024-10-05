@@ -1,14 +1,16 @@
 import Shimmer from "./Shimmer";
 import { useState, useEffect } from "react";
-import ResturentCard from "./ResturentCard";
+import ResturentCard,{withpromotedLabel} from "./ResturentCard";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+
 const Body = () => {
   const [resturentList, setResturentList] = useState([]);
   const [filterResturants, setFilterResturants] = useState([]);
   const [loading, setLoading] = useState(true); // For shimmer effect
   const [searchtext, setSearchtext] = useState("");
-
+  const ResturentPromoted = withpromotedLabel(ResturentCard)
+  
   useEffect(() => {
     fetchData();
   }, []);
@@ -70,8 +72,10 @@ const Body = () => {
       <div className="flex flex-wrap">
         {filterResturants.map((resturent) => (
           <Link key={resturent.info.id} to={"/resturent/" + resturent.info.id}>
-            <ResturentCard resData={resturent} />
+            {resturent.info.avgRating >= 4.2? <ResturentPromoted resData={resturent}/>:<ResturentCard resData={resturent} />}
+            
           </Link>
+          
         ))}
       </div>
     </div>

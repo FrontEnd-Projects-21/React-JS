@@ -1,16 +1,18 @@
 import Shimmer from "./Shimmer";
-import { useState, useEffect } from "react";
-import ResturentCard,{withpromotedLabel} from "./ResturentCard";
+import { useState, useEffect, useContext } from "react";
+import ResturentCard, { withpromotedLabel } from "./ResturentCard";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [resturentList, setResturentList] = useState([]);
   const [filterResturants, setFilterResturants] = useState([]);
   const [loading, setLoading] = useState(true); // For shimmer effect
   const [searchtext, setSearchtext] = useState("");
-  const ResturentPromoted = withpromotedLabel(ResturentCard)
-  
+  const ResturentPromoted = withpromotedLabel(ResturentCard);
+  const { loggedInUser, setUserName } = useContext(UserContext);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -43,8 +45,11 @@ const Body = () => {
     );
     setFilterResturants(filteredList);
   };
-  const onlineStatus=useOnlineStatus();
-  if(onlineStatus===false) return <h1>Looks Like you are offline Please check your Internet connection</h1>
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus === false)
+    return (
+      <h1>Looks Like you are offline Please check your Internet connection</h1>
+    );
 
   return loading ? (
     <Shimmer />
@@ -61,21 +66,41 @@ const Body = () => {
               setSearchtext(e.target.value);
             }}
           />
-          <button className="px-4 bg-orange-200 mx-4 rounded-lg"onClick={handleSearch}>Search</button>
+          <button
+            className="px-4 bg-orange-200 mx-4 rounded-lg"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
         </div>
         <div className="flex items-center">
-        <button className="px-4 py-2 border border-solid border-orange-900 bg-orange-300 rounded-lg hover:bg-orange-600" onClick={filterTopRated}>
-          Top Rated Restaurants
-        </button>
+          <button
+            className="px-4 py-2 border border-solid border-orange-900 bg-orange-300 rounded-lg hover:bg-orange-600"
+            onClick={filterTopRated}
+          >
+            Top Rated Restaurants
+          </button>
+          <div className="flex items-center m-4">
+            <label>User Name : </label>
+            <input
+              className="border border-orange-300"
+              type="text"
+              placeholder="Enter the User Name..."
+              value={loggedInUser}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+          </div>
         </div>
       </div>
       <div className="flex flex-wrap">
         {filterResturants.map((resturent) => (
           <Link key={resturent.info.id} to={"/resturent/" + resturent.info.id}>
-            {resturent.info.avgRating >= 4.2? <ResturentPromoted resData={resturent}/>:<ResturentCard resData={resturent} />}
-            
+            {resturent.info.avgRating >= 4.2 ? (
+              <ResturentPromoted resData={resturent} />
+            ) : (
+              <ResturentCard resData={resturent} />
+            )}
           </Link>
-          
         ))}
       </div>
     </div>

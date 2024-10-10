@@ -1,4 +1,11 @@
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/CardSlice";
+
 const ItemList = ({ items }) => {
+  const dispatch = useDispatch();
+  const handleAddItem = (item) => {
+    dispatch(addItem(item));
+  };
   return (
     <div>
       {items.map((item) => (
@@ -18,7 +25,10 @@ const ItemList = ({ items }) => {
           </div>
           <div className="w-3/12 p-4">
             <div className="absolute">
-              <button className="p-2 bg-white shadow-lg mx-10 rounded-lg">
+              <button
+                className="p-2 bg-white shadow-lg mx-10 rounded-lg"
+                onClick={() => handleAddItem(item)}
+              >
                 Add +
               </button>
             </div>

@@ -11,7 +11,7 @@ const Header = () => {
   const onlineStatus = useOnlineStatus();
   //Subscribing to the Store Using selector
   const cartItemValue = useSelector((store) => store.cart.items);
-  console.log(cartItemValue);
+  // console.log(cartItemValue);
   return (
     <div className="flex justify-between bg-orange-200 shadow-lg m-2">
       <div className="logo-container">

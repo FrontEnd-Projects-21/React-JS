@@ -32,6 +32,9 @@ const Header = () => {
           <li className="px-4">
             <Link to="/grocery">Grocery Store</Link>
           </li>
+          <li className="px-4">
+            <Link to="/demo">Demo</Link>
+          </li>
           <li className="px-4 font-bold">
             <Link to="/cart">Cart -({cartItemValue.length} Items)</Link>
           </li>
